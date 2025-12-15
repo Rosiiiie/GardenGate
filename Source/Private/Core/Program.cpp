@@ -20,8 +20,8 @@
 #include <chrono>
 #include <thread>
 
-#define OFFSET_CLIENT_STATE_CHANGE HOOK_OFFSET(0x140A8C7A0)
-#define OFFSET_GET_SETTINGS_OBJECT HOOK_OFFSET(0x1401F7BD0)
+#define OFFSET_CLIENT_STATE_CHANGE HOOK_OFFSET(0x14053F180)
+#define OFFSET_GET_SETTINGS_OBJECT HOOK_OFFSET(0x1403BCEA0)
 
 Kyber::Program* g_program;
 
@@ -36,7 +36,7 @@ Program::Program(HMODULE module)
 {
     if (g_program || MH_Initialize() != MH_OK)
     {
-        ErrorUtils::ThrowException("Initialization failed. Please restart Battlefront and try again!");
+        ErrorUtils::ThrowException("Initialization failed. Please restart Garden Warfare and try again!");
     }
 
     // Open a console
@@ -51,7 +51,7 @@ Program::Program(HMODULE module)
     dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
     SetConsoleMode(stdoutHandle, dwMode);
 
-    SetConsoleTitleA(("Kyber v" + KYBER_VERSION).c_str());
+    SetConsoleTitleA(("GardenGate v" + KYBER_VERSION).c_str());
 
     new std::thread(&Program::InitializationThread, this);
 }
