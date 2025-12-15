@@ -294,9 +294,9 @@ Renderer::Renderer()
     desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     desc.BufferCount = 1;
 
-    KYBER_LOG(LogLevel::Debug, "Attempting to find Battlefront window");
+    KYBER_LOG(LogLevel::Debug, "Attempting to find Garden Warfare window");
 
-    hWnd = FindWindow("Frostbite", "STAR WARS Battlefront II");
+    hWnd = FindWindow("Frostbite", "PVZ Garden Warfare");
 
     if (!hWnd)
     {
