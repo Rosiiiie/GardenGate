@@ -20,33 +20,6 @@ KyberAPIService::KyberAPIService()
 
 void KyberAPIService::GetProxies(std::function<void(std::optional<std::vector<KyberProxy>>)> callback)
 {
-    std::experimental::post(m_thread_pool, [this, callback = std::move(callback)]() mutable {
-        auto response = m_client.Get("/api/proxies");
-        if (response && response->status == 200)
-        {
-            auto json = nlohmann::json::parse(response->body);
-            std::vector<KyberProxy> proxies;
-            for (auto& proxy : json)
-            {
-                KyberProxy kyberProxy;
-                int ping = GetPing(proxy["ip"].get<std::string>());
-                kyberProxy.flag = proxy["flag"];
-                kyberProxy.name = proxy["name"];
-                kyberProxy.ip = proxy["ip"];
-                kyberProxy.ping = ping;
-                kyberProxy.displayName =
-                    std::string(std::string(kyberProxy.name) + std::string(" (") + std::to_string(kyberProxy.ping) + std::string("ms)"));
-                proxies.push_back(kyberProxy);
-            }
-            callback(std::optional<std::vector<KyberProxy>>(proxies));
-        }
-        else
-        {
-            KYBER_LOG(
-                LogLevel::Error, "Failed to get proxy list (" << (response ? std::to_string(response->status) : "no response") << ")");
-            callback(std::nullopt);
-        }
-    });
 }
 
 int KyberAPIService::GetPing(std::string ip)

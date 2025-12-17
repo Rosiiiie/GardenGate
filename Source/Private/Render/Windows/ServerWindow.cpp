@@ -137,8 +137,7 @@ void ServerWindow::Draw()
         {
             if (strcmp(currentMode.name, "Mode") != 0 && strcmp(currentLevel.name, "Level") != 0)
             {
-                g_program->m_server->Start(
-                    currentLevel.level, currentMode.mode, maxPlayers, SocketSpawnInfo(false, nullptr, "Test Server"));
+                g_program->m_server->Start(currentLevel.level, currentMode.mode, maxPlayers, SocketSpawnInfo(false, "", "Test Server"));
             }
             else
             {
@@ -156,7 +155,7 @@ void ServerWindow::Draw()
             errorTime--;
         }
     }
-    else if (g_program->m_clientState == ClientState_Ingame)
+    /* else if (g_program->m_clientState == ClientState_Ingame)
     {
         ImGui::Text("Leave this game to start a new one.");
         ImGui::Separator();
@@ -223,6 +222,7 @@ void ServerWindow::Draw()
         ImGui::Text("Settings will be available once");
         ImGui::Text("the game is fully loaded.");
     }
+    */
     ImGui::End();
 }
 } // namespace Kyber
