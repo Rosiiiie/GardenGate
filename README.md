@@ -1,5 +1,5 @@
 > [!WARNING]
-> This Injects now! though the draw of Server Setup will just die, still working on it
+> This Injects now! though starting a server will kill it, reason being that some offsets are wrong.
 > The base of this is NOT MY CODE, it is a fork of Kyber modified to run on GW1
 ------
 This is simply adding GW1 (potentially GW2) dedicated server support.
