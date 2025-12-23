@@ -54,86 +54,176 @@ bool DrawScoreboardPlayer(std::vector<ServerPlayer*> playerList, int index)
 void ServerWindow::Draw()
 {
     ImGui::Begin("SERVER SETTINGS", &m_isEnabled, ImGuiWindowFlags_AlwaysAutoResize);
-
-    static GameMode* currentMode = &s_game_modes[0]; // pointer to GameMode
-    static GameLevel* currentLevel = nullptr;        // pointer to GameLevel
-
-    // Initialize currentLevel if not set
-    if (!currentLevel)
-    {
-        if (!currentMode->levelOverrides.empty())
-            currentLevel = &currentMode->levelOverrides[0];
-        else if (!currentMode->levels.empty())
-            currentLevel = new GameLevel{ currentMode->levels[0], currentMode->levels[0] }; // make sure it's valid
-    }
-
-    ImGui::Text("GAME MODE:");
-    if (ImGui::BeginCombo("##modeCombo", currentMode->name))
-    {
-        for (int n = 0; n < sizeof(s_game_modes) / sizeof(GameMode); n++)
-        {
-            bool selected = (currentMode == &s_game_modes[n]);
-            if (ImGui::Selectable(s_game_modes[n].name, selected))
-            {
-                currentMode = &s_game_modes[n];
-                // Reset level to first valid one
-                if (!currentMode->levelOverrides.empty())
-                    currentLevel = &currentMode->levelOverrides[0];
-                else if (!currentMode->levels.empty())
-                    currentLevel = new GameLevel{ currentMode->levels[0], currentMode->levels[0] };
-            }
-            if (selected)
-                ImGui::SetItemDefaultFocus();
-        }
-        ImGui::EndCombo();
-    }
-
+    GameSettings* gameSettings = Settings<GameSettings>("Game");
+    ImGui::Text("START POINT:");
+    ImGui::SameLine();
+    ImGui::Text("%s", gameSettings->DefaultLayerInclusion);
     ImGui::Text("LEVEL:");
-    if (ImGui::BeginCombo("##levelCombo", currentLevel->name))
-    {
-        for (size_t i = 0; i < currentMode->levels.size(); i++)
-        {
-            GameLevel tempLevel = GetGameLevel(*currentMode, currentMode->levels[i]);
-            bool selected = (strcmp(currentLevel->level, tempLevel.level) == 0);
-            if (ImGui::Selectable(tempLevel.name, selected))
-                currentLevel = new GameLevel{ tempLevel.level, tempLevel.name }; // safe copy
-            if (selected)
-                ImGui::SetItemDefaultFocus();
-        }
-        ImGui::EndCombo();
-    }
-
-    static int maxPlayers = 4;
-    ImGui::SliderInt("Max Players", &maxPlayers, 1, 8);
-
-    static int errorTime = 0;
+    ImGui::SameLine();
+    ImGui::Text("%s", gameSettings->Level);
+    ImGui::Separator();
     if (!g_program->m_server->m_running)
     {
+        static GameMode currentMode = { "", "Mode", {}, {} };
+        static GameLevel currentLevel = { "", "Level" };
+        // static KyberProxy currentProxy = m_proxies->at(0);
+        if (ImGui::BeginCombo("##modeCombo", currentMode.name))
+        {
+            for (int n = 0; n < IM_ARRAYSIZE(s_game_modes); n++)
+            {
+                bool selected = (strcmp(currentMode.mode, s_game_modes[n].mode) == 0);
+                if (ImGui::Selectable(s_game_modes[n].name, selected))
+                {
+                    currentMode = s_game_modes[n];
+                    currentLevel = { "", "Level" };
+                }
+                if (selected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }
+        if (ImGui::BeginCombo("##levelCombo", currentLevel.name))
+        {
+            for (int i = 0; i < currentMode.levels.size(); i++)
+            {
+                GameLevel level = GetGameLevel(currentMode, currentMode.levels[i]);
+                bool selected = (strcmp(currentLevel.level, level.level) == 0);
+                if (ImGui::Selectable(level.name, selected))
+                {
+                    currentLevel = level;
+                }
+                if (selected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }
+
+        /* if (m_proxies && ImGui::BeginCombo("##proxyCombo", currentProxy.displayName.c_str()))
+        {
+            for (int i = 0; i < m_proxies->size(); i++)
+            {
+                KyberProxy proxy = m_proxies->at(i);
+                bool selected = currentProxy.ip == proxy.ip;
+                if (ImGui::Selectable(proxy.displayName.c_str(), selected))
+                {
+                    currentProxy = proxy;
+                }
+                if (selected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }*/
+        static int maxPlayers = 40;
+        ImGui::SliderInt("Max Players", &maxPlayers, 2, 64);
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::BeginTooltip();
+            ImGui::Text("When you use a Kyber Proxy, your server");
+            ImGui::Text("will be displayed on the server browser,");
+            ImGui::Text("and client/host IPs will be hidden.\n\n");
+            ImGui::Text("When you don't use a Kyber Proxy, you will");
+            ImGui::Text("need to Port Forward port 25200 in your router");
+            ImGui::Text("and have players connect to your IP directly.");
+            ImGui::Text("Mod verification is not supported when not using a proxy.");
+            ImGui::EndTooltip();
+        }
+        static int errorTime = 0;
         if (ImGui::Button("Start Server"))
         {
-            if (currentLevel && currentMode)
+            if (strcmp(currentMode.name, "Mode") != 0 && strcmp(currentLevel.name, "Level") != 0)
             {
-                g_program->m_server->Start(currentLevel->level, currentMode->mode, maxPlayers);
+                g_program->m_server->Start(currentLevel.level, currentMode.mode, 40, SocketSpawnInfo(false, "", ""));
             }
             else
             {
                 errorTime = 1000;
             }
         }
-
-        if (errorTime > 0 && ImGui::IsItemHovered())
+        if (errorTime > 0)
         {
-            ImGui::BeginTooltip();
-            ImGui::Text("Please select a valid game mode and level.");
-            ImGui::EndTooltip();
+            if (ImGui::IsItemHovered())
+            {
+                ImGui::BeginTooltip();
+                ImGui::Text("Please select a game mode and level.");
+                ImGui::EndTooltip();
+            }
             errorTime--;
+        }
+    }
+    /* else if (g_program->m_clientState == ClientState_Ingame)
+    {
+        ImGui::Text("Leave this game to start a new one.");
+        ImGui::Separator();
+        AutoPlayerSettings* aiSettings = Settings<AutoPlayerSettings>("AutoPlayers");
+        if (ImGui::Button("START GAME"))
+        {
+            // These bots don't actually exist, it just tricks the server into thinking they do.
+            aiSettings->ForceFillGameplayBotsTeam1 = 20;
+            aiSettings->ForceFillGameplayBotsTeam2 = 19;
+        }
+        ImGui::Separator();
+        ImGui::Text("AI SETTINGS");
+        ImGui::SliderInt("AI COUNT", &aiSettings->ForcedServerAutoPlayerCount, -1, 64);
+        ImGui::Checkbox("UPDATE AI", &aiSettings->UpdateAI);
+        ImGui::SameLine();
+        ImGui::Checkbox("AI IGNORE PLAYERS", &aiSettings->ServerPlayersIgnoreClientPlayers);
+        ImGui::Checkbox("AUTO BALANCE TEAMS", &Settings<WSGameSettings>("Whiteshark")->AutoBalanceTeamsOnNeutral);
+        ImGui::Separator();
+        ImGui::Text("PLAYER LIST");
+        ServerPlayerManager* playerManager = g_program->m_server->m_playerManager;
+        if (playerManager)
+        {
+            std::map<int32_t, std::vector<ServerPlayer*>> players;
+            // Bleh
+            players[1] = std::vector<ServerPlayer*>();
+            players[2] = std::vector<ServerPlayer*>();
+            for (ServerPlayer* player : playerManager->m_players)
+            {
+                if (player && !player->m_isAIPlayer)
+                {
+                    players[player->m_teamId].push_back(player);
+                }
+            }
+            if (ImGui::BeginTable("PLAYER LIST", 2, ImGuiTableFlags_SizingFixedFit))
+            {
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                ImGui::Text("LIGHT SIDE");
+                ImGui::TableNextColumn();
+                ImGui::Text("DARK SIDE");
+                for (int i = 0; i < 64; i++)
+                {
+                    ImGui::TableNextRow();
+                    int drew = 0;
+                    for (int j = 1; j <= players.size(); j++)
+                    {
+                        ImGui::TableNextColumn();
+                        if (DrawScoreboardPlayer(players[j], i))
+                        {
+                            drew++;
+                        }
+                    }
+                    if (!drew)
+                    {
+                        break;
+                    }
+                }
+                ImGui::EndTable();
+            }
         }
     }
     else
     {
-        ImGui::Text("The server is running. Stop it to change settings.");
+        ImGui::Text("Settings will be available once");
+        ImGui::Text("the game is fully loaded.");
     }
-
+    */
     ImGui::End();
 }
 } // namespace Kyber
