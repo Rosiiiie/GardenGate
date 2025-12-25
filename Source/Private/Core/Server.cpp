@@ -31,12 +31,12 @@
 #define OFFSET_SERVERPEER_CONNECTIONFORPLAYER HOOK_OFFSET(0x140BEFFB0)
 
 #define OFFSET_SERVERCONNECTION_DISCONNECT HOOK_OFFSET(0x140BF01D0)
-#define OFFSET_SERVERCONNECTION_KICKPLAYER HOOK_OFFSET(0x14688DB50)
+#define OFFSET_SERVERCONNECTION_KICKPLAYER HOOK_OFFSET(0x1407056D0)
 
 #define OFFSET_SERVERPLAYERMANAGER_DELETEPLAYER HOOK_OFFSET(0x140BDD950)
 
-#define OFFSET_APPLY_SETTINGS HOOK_OFFSET(0x1401B31B0)
-#define OFFSET_CLIENT_INIT_NETWORK HOOK_OFFSET(0x140A8DE80)
+#define OFFSET_APPLY_SETTINGS HOOK_OFFSET(0x14168b748)
+#define OFFSET_CLIENT_INIT_NETWORK HOOK_OFFSET(0x141578778)
 #define OFFSET_CLIENT_CONNECTTOADDRESS HOOK_OFFSET(0x140559CD0)
 
 #define OFFSET_SERVER_PATCH (0x140A92F71)
@@ -112,9 +112,6 @@ void Server::Start(const char* level, const char* mode, int maxPlayers, SocketSp
     NetworkSettings* networkSettings = Settings<NetworkSettings>("Network");
     networkSettings->MaxClientCount = maxPlayers;
     networkSettings->ServerPort = 25200;
-
-    NetObjectSystemSettings* netObjectSettings = Settings<NetObjectSystemSettings>("NetObjectSystem");
-    netObjectSettings->MaxServerConnectionCount = maxPlayers;
 
     ClientSettings* clientSettings = Settings<ClientSettings>("Client");
     clientSettings->FastExit = true;

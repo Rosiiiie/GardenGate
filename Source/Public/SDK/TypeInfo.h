@@ -250,33 +250,52 @@ public:
 class GameSettings : public SystemSettings
 {
 public:
-    uint32_t MaxPlayerCount;                          // 0x0020
-    char _0x0024[4];                                  // 0x0024
-    GameModeViewDefinition** GameModeViewDefinitions; // 0x0028
-    VersionData* Version;                             // 0x0030
-    SubWorldInclusion* SubWorldInclusion;             // 0x0038
-    PlayerData* Player;                               // 0x0040
-    GameSettingsComponent** GameSettingsComponents;   // 0x0048
-    uint32_t MaxSpectatorCount;                       // 0x0050
-    LogFileCollisionMode LogFileCollisionMode;        // 0x0054
-    uint32_t LogFileRotationHistoryLength;            // 0x0058
-    char _0x005C[4];                                  // 0x005C
-    char* Level;                                      // 0x0060
-    char* StartPoint;                                 // 0x0068
-    char* InstallationLevel;                          // 0x0070
-    char* InstallationStartPoint;                     // 0x0078
-    char* InstallationDefaultLayerInclusion;          // 0x0080
-    char* ActiveGameModeViewDefinition;               // 0x0088
-    TeamId DefaultTeamId;                             // 0x0090
-    char _0x0094[4];                                  // 0x0094
-    char* DefaultLayerInclusion;                      // 0x0098
-    float TimeToWaitForQuitTaskCompletion;            // 0x00A0
-    int32_t DifficultyIndex;                          // 0x00A4
-    bool LogFileEnable;                               // 0x00A8
-    bool ResourceRefreshAlwaysAllowed;                // 0x00A9
-    bool SpawnMaxLocalPlayersOnStartup;               // 0x00AA
-    char _0x00AB[5];                                  // 0x00AB
+    uint32_t MaxPlayerCount;                   // 0x0020  (matches m_maxPlayerCount)
+    uint32_t MaxSpectatorCount;                // 0x0024  (was later, closest match)
+    char _0x0028[4];                           // 0x0028  (minPlayerCountElimination placeholder)
+    LogFileCollisionMode LogFileCollisionMode; // 0x002C
+    uint32_t LogFileRotationHistoryLength;     // 0x0030
+
+    char _0x0034[4]; // 0x0034 padding
+
+    char* Level;      // 0x0038
+    char* StartPoint; // 0x0040
+
+    char _0x0048[8]; // 0x0048 input configuration (unknown here)
+
+    char* ActiveGameModeViewDefinition;               // 0x0050
+    GameModeViewDefinition** GameModeViewDefinitions; // 0x0058
+
+    TeamId DefaultTeamId; // 0x0060
+    char _0x0064[8];      // 0x0064 (PS3 rating + log history)
+
+    VersionData* Version;                 // 0x0070
+    SubWorldInclusion* SubWorldInclusion; // 0x0078
+
+    char* DefaultLayerInclusion; // 0x0080
+
+    char _0x0088[8]; // 0x0088 warmup + spawn delay
+
+    float TimeToWaitForQuitTaskCompletion; // 0x0090
+
+    char _0x0094[4]; // 0x0094 padding
+
+    PlayerData* Player; // 0x0098
+
+    char _0x00A0[8]; // 0x00A0 difficulty settings
+
+    int32_t DifficultyIndex; // 0x00A8
+
+    char _0x00AC[4]; // 0x00AC SKU
+
+    GameSettingsComponent** GameSettingsComponents; // 0x00B0
+
+    bool LogFileEnable;                 // 0x00B8
+    bool ResourceRefreshAlwaysAllowed;  // 0x00B9
+    bool SpawnMaxLocalPlayersOnStartup; // 0x00BA
+    char _0x00BB[5];                    // 0x00BB–0x00BF padding
 };
+
 class NetworkSettings : public SystemSettings
 {
 public:

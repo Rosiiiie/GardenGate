@@ -55,18 +55,18 @@ void ServerWindow::Draw()
 {
     ImGui::Begin("SERVER SETTINGS", &m_isEnabled, ImGuiWindowFlags_AlwaysAutoResize);
     GameSettings* gameSettings = Settings<GameSettings>("Game");
-    ImGui::Text("START POINT:");
+    ImGui::Text("GAME MODE:");
     ImGui::SameLine();
-    ImGui::Text("%s", gameSettings->DefaultLayerInclusion);
+    ImGui::Text(gameSettings->DefaultLayerInclusion);
     ImGui::Text("LEVEL:");
     ImGui::SameLine();
-    ImGui::Text("%s", gameSettings->Level);
+    ImGui::Text(gameSettings->Level);
     ImGui::Separator();
     if (!g_program->m_server->m_running)
     {
         static GameMode currentMode = { "", "Mode", {}, {} };
         static GameLevel currentLevel = { "", "Level" };
-        // static KyberProxy currentProxy = m_proxies->at(0);
+        //static KyberProxy currentProxy = m_proxies->at(0);
         if (ImGui::BeginCombo("##modeCombo", currentMode.name))
         {
             for (int n = 0; n < IM_ARRAYSIZE(s_game_modes); n++)
