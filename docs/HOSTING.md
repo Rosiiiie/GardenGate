@@ -18,7 +18,7 @@ We recommend;
 
 3. Press load and your server should be up
 
-### Garden warfare 2
+### Garden warfare 2 [PLEASE DOWNGRADE YOUR GAME FIRST](./gw2_downgrade.md)
 
 1. Put `dinput8.dll` from [releases](https://github.com/nocss42/GardenGate/releases) next to your game's .exe
 
