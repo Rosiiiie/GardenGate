@@ -12,4 +12,3 @@
 [AIHax](../Mods/GW2/AIHax.fbmod) (Nam)
 
 3. Join with the [launcher]()
-
