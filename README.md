@@ -29,7 +29,7 @@ What's not done:
 
 - puro420
 
-### Projects
+### Third-Part
 Following open-source projects were used:
 
 - [MinHook](https://github.com/TsudaKageyu/minhook)
