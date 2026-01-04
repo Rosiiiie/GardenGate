@@ -23,7 +23,9 @@ We recommend;
 2. Install the following mods
 
 [Offline mode](../Mods/GW2/OfflineModeLatestCompatible.fbmod) (brekko)
+
 [Private Play](../Mods/GW2/PrivatePlayRemastered.fbmod) (Dark Damona,brekko)
+
 [AIHax](../Mods/GW2/AIHax.fbmod) (Nam)
 
 3. Launch the game and host any map of your choice through the multiplayer portal

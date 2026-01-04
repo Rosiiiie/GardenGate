@@ -8,7 +8,9 @@
 ### Garden warfare 2
 
 [Offline mode](../Mods/GW2/OfflineModeLatestCompatible.fbmod) (brekko)
+
 [Private Play](../Mods/GW2/PrivatePlayRemastered.fbmod) (Dark Damona,brekko)
+
 [AIHax](../Mods/GW2/AIHax.fbmod) (Nam)
 
 3. Join with the [launcher]()
