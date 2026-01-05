@@ -14,7 +14,6 @@ Experimental private servers for Plants vs. Zombies Garden Warfare 1 & 2
 
 ### What's not done (TODO):
 * Upgrades for gw2
-* Killswitch timer issue gw2 (doesn't happen on us for some reason) 
 * Fix rare crashes caused by; lnck,cmms
 * Server passwords
 * Player kicking/moderation
