@@ -7,7 +7,7 @@ No, this is a private server project created for educational and experimental pu
 No it doesn't.
 
 ### I'm having issue X is this known?
-Check if it'S been added to the what's not done part of [README.md](../README.md)
+Check if it's been added to the what's not done part of [README.md](../README.md)
 
 ### How do I contribute?
 1. Fork the repository.
