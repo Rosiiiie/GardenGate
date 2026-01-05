@@ -32,6 +32,9 @@ We recommend;
 
 [AIHax](../Mods/GW2/AIHax.fbmod) (Nam)
 
+# Make sure your load order is the same as this image! #
+<img width="383" height="111" alt="image" src="https://github.com/user-attachments/assets/aad07e39-bc86-4b18-8321-3c6f19511b7d" />
+
 3. Launch the game with the launcher (keep the ip section empty)
 
 4. Host any map of your choice through the multiplayer portal
