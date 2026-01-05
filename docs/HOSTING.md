@@ -4,11 +4,13 @@
 
 1. Put `dinput8.dll` from [releases](https://github.com/nocss42/GardenGate/releases) next to your game's .exe
 
-2. Install the following mods 
+2. Install the following mods;
 
 [UnlockAll](../Mods/GW1/UnlockAll.fbmod)
 
-3. Inject the map loader dll of your choice;
+3. Launch the game with the launcher (keep the ip section empty)
+
+4. Inject the map loader dll of your choice;
 
 We recommend;
 
@@ -16,13 +18,13 @@ We recommend;
 
 [PvzShooterHax](https://github.com/natv1337/PVZShooterHax/releases)
 
-3. Press load and your server should be up
+5. Press load and your server should be up
 
 ### Garden warfare 2 [(PLEASE DOWNGRADE YOUR GAME FIRST)](./gw2_downgrade.md)
 
 1. Put `dinput8.dll` from [releases](https://github.com/nocss42/GardenGate/releases) next to your game's .exe
 
-2. Install the following mods
+2. Install the following mods;
 
 [Offline mode](../Mods/GW2/OfflineModeLatestCompatible.fbmod) (brekko)
 
@@ -30,9 +32,9 @@ We recommend;
 
 [AIHax](../Mods/GW2/AIHax.fbmod) (Nam)
 
-3. Launch the game and host any map of your choice through the multiplayer portal
+3. Launch the game with the launcher (keep the ip section empty)
 
-### (Use `-dataPath ModData/Default` arguement or `GAME_DATA_DIR` env var for mods to work for hosting. We're working on a host option for the launcher that does this)
+4. Host any map of your choice through the multiplayer portal
 
 ### (Make sure to port forward `25200` or use some sort of VLAN software)
 ### RadminVPN or Hamachi

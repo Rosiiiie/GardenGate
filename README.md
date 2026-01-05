@@ -6,16 +6,20 @@
 Experimental private servers for Plants vs. Zombies Garden Warfare 1 & 2
 
 ------
-What's done:
+### What's done:
 * Offsets
 * Hosting servers
 * Joining
 * Custom unlocker mod that unlocks everything
 
-What's not done:
+### What's not done (TODO):
+* Upgrades for gw2
+* Killswitch timer issue gw2 (doesn't happen on us for some reason) 
 * Fix rare crashes caused by; lnck,cmms
 * Server passwords
 * Player kicking/moderation
+
+### [Discord server](https://discord.gg/sEs9NcUrF9)
 
 ## Credits
 
